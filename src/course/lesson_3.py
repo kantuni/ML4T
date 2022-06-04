@@ -42,3 +42,18 @@ if __name__ == "__main__":
     print(a.size)
     # Print the data type of the array.
     print(a.dtype)
+
+    # Seed the random number generator so that
+    # it always generates the same sequence of numbers.
+    np.random.seed(123)
+    a = np.random.randint(0, 10, size=(3, 4))
+    print(a)
+
+    # Print the sum of all elements in the array.
+    print(a.sum())
+    # Print the min values in each column.
+    print(a.min(axis=0))
+    # Print the max values in each row.
+    print(a.max(axis=1))
+    # Print the mean of all elements in the array.
+    print(a.mean())
