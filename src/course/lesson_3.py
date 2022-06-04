@@ -57,3 +57,10 @@ if __name__ == "__main__":
     print(a.max(axis=1))
     # Print the mean of all elements in the array.
     print(a.mean())
+
+    # Print the index of the max value in the array.
+    # NOTE: `argmax` returns the index of the first
+    # max value as if the array is 1 dimensional.
+    # `unravel_index` is then used to find the
+    # coordinate in the matrix.
+    print(np.unravel_index(a.argmax(), a.shape))
