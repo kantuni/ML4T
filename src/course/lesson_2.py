@@ -22,7 +22,7 @@ def get_stock_prices(
     # Create an empty dataframe (with dates as indices).
     df = pd.DataFrame(index=dates)
 
-    # Read SPY data.
+    # Read SPY data. It would act as a reference stock.
     df_spy = pd.read_csv(
         symbol_to_path("SPY"),
         # use the date as index
