@@ -1,6 +1,7 @@
 from pathlib import Path
 from typing import List
 
+import matplotlib.pyplot as plt
 import pandas as pd
 
 
@@ -61,12 +62,43 @@ def get_stock_prices(
     return df
 
 
+def plot_data(df: pd.DataFrame, title="Stock Prices") -> None:
+    """Plots the dataframe."""
+    axis = df.plot(title=title)
+    axis.set_xlabel("Date")
+    axis.set_ylabel("Price")
+    # Show the plot.
+    plt.show()
+
+
+def plot_selected(
+    df: pd.DataFrame, symbols: List[str], start_date: str, end_date: str
+) -> None:
+    """Plots the desired symbols in the given period."""
+    plot_data(df.loc[start_date:end_date, symbols])
+
+
+def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
+    """Normalizes stock prices using the first row of the dataframe."""
+    return df / df.iloc[0]
+
+
 if __name__ == "__main__":
-    # Print stock (adjusted close) prices for IBM, GOOG, and GLD from 2010-01-22 to 2010-01-26
+    # Print stock (adjusted close) prices for IBM, GOOG, and GLD from 2010-01-22 to 2010-01-26.
     # df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-22", "2010-01-26")
     # print(df)
 
-    # Get stock (adjusted close) prices for IBM, GOOG, and GLD in 2010
+    # Get stock (adjusted close) prices for IBM, GOOG, and GLD in 2010.
     df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-01", "2010-12-31")
-    # Print SPY and IBM from 2010-03-10 to 2010-03-15 (using slicing)
-    print(df.loc["2010-03-10":"2010-03-15", ["SPY", "IBM"]])
+
+    # Print SPY and IBM from 2010-03-10 to 2010-03-15 (using slicing).
+    # print(df.loc["2010-03-10":"2010-03-15", ["SPY", "IBM"]])
+
+    # Plot stock (adjusted close) prices for IBM, GOOG, and GLD in 2010.
+    # plot_data(df)
+
+    # Plot SPY and IBM from 2010-03-10 to 2010-03-15.
+    # plot_selected(df, ["SPY", "IBM"], "2010-03-10", "2010-03-15")
+
+    # Plot normalized data.
+    plot_data(normalize_data(df))
