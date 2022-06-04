@@ -1,6 +1,5 @@
 # Machine Learning for Trading
 
-To run a Python script
 ```bash
 # Install dependencies
 poetry install
