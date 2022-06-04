@@ -84,21 +84,21 @@ def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    # Print stock (adjusted close) prices for IBM, GOOG, and GLD from 2010-01-22 to 2010-01-26.
-    # df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-22", "2010-01-26")
-    # print(df)
+    print("Stock prices for IBM, GOOG, and GLD from 2010-01-22 to 2010-01-26")
+    df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-22", "2010-01-26")
+    print(df)
 
     # Get stock (adjusted close) prices for IBM, GOOG, and GLD in 2010.
     df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-01", "2010-12-31")
 
-    # Print SPY and IBM from 2010-03-10 to 2010-03-15 (using slicing).
-    # print(df.loc["2010-03-10":"2010-03-15", ["SPY", "IBM"]])
+    print("SPY and IBM from 2010-03-10 to 2010-03-15 (using slicing)")
+    print(df.loc["2010-03-10":"2010-03-15", ["SPY", "IBM"]])
 
-    # Plot stock (adjusted close) prices for IBM, GOOG, and GLD in 2010.
-    # plot_data(df)
+    print("Plotting stock prices for IBM, GOOG, and GLD in 2010...")
+    plot_data(df)
 
-    # Plot SPY and IBM from 2010-03-10 to 2010-03-15.
-    # plot_selected(df, ["SPY", "IBM"], "2010-03-10", "2010-03-15")
+    print("Plotting SPY and IBM from 2010-03-10 to 2010-03-15...")
+    plot_selected(df, ["SPY", "IBM"], "2010-03-10", "2010-03-15")
 
-    # Plot normalized data.
+    print("Plotting normalized data...")
     plot_data(normalize_data(df))
