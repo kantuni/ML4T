@@ -78,3 +78,9 @@ if __name__ == "__main__":
     print(a)
     a[1, :] = [1, 2, 3, 4]
     print(a)
+
+    # Indexing an array with another array.
+    b = np.random.randint(0, 100, size=10)
+    print(b)
+    indices = [7, 3, 1]
+    print(b[indices])
