@@ -24,15 +24,15 @@ def get_stock_prices(
     # Read SPY data.
     df_spy = pd.read_csv(
         symbol_to_path("SPY"),
-        # Use the date as index
+        # use the date as index
         index_col="Date",
-        # Convert the column to datetime
+        # convert the column to datetime
         parse_dates=True,
-        # We're only interested in these columns
+        # we're only interested in these columns
         usecols=["Date", "Adj Close"],
     )
 
-    # Rename the "Adj Close" column to "SPY" to avoid clashes after joining.
+    # Rename the "Adj Close" column to "SPY" to avoid clashes during joins.
     df_spy = df_spy.rename(columns={"Adj Close": "SPY"})
 
     # Inner join the dataframes.
@@ -52,7 +52,7 @@ def get_stock_prices(
             usecols=["Date", "Adj Close"],
         )
 
-        # Rename the "Adj Close" column to symbol to avoid clashes after joining.
+        # Rename the "Adj Close" column to symbol to avoid clashes during joins.
         df_symbol = df_symbol.rename(columns={"Adj Close": symbol})
 
         # Left join the dataframes (because we want to keep all days when SPY traded).
@@ -63,4 +63,10 @@ def get_stock_prices(
 
 if __name__ == "__main__":
     # Print stock (adjusted close) prices for IBM, GOOG, and GLD from 2010-01-22 to 2010-01-26
-    print(get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-22", "2010-01-26"))
+    # df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-22", "2010-01-26")
+    # print(df)
+
+    # Get stock (adjusted close) prices for IBM, GOOG, and GLD in 2010
+    df = get_stock_prices(["IBM", "GOOG", "GLD"], "2010-01-01", "2010-12-31")
+    # Print SPY and IBM from 2010-03-10 to 2010-03-15 (using slicing)
+    print(df.loc["2010-03-10":"2010-03-15", ["SPY", "IBM"]])
