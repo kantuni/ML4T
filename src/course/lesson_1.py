@@ -29,12 +29,11 @@ def plot_high_prices(symbol: str) -> None:
 
 
 if __name__ == "__main__":
-    # Print last 5 rows of AAPL
-    # last_five_rows("AAPL")
+    print("Last 5 rows of AAPL")
+    last_five_rows("AAPL")
 
-    # Print mean volume of AAPL, MSFT, and GOOG
-    # for symbol in ["AAPL", "MSFT", "GOOG"]:
-    #     print(symbol, get_mean_volume(symbol))
+    for symbol in ["AAPL", "MSFT", "GOOG"]:
+        print(f"Mean volume of {symbol}: {get_mean_volume(symbol)}")
 
-    # Plot high prices of IBM
+    print("Plotting high prices of AAPL...")
     plot_high_prices("IBM")
