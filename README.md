@@ -1,11 +1,11 @@
 # Machine Learning for Trading
 
+Install dependencies
 ```bash
-# Install dependencies
 poetry install
 ```
 
+Run script
 ```bash
-# Run script
 poetry run python src/course/lesson_{x}.py
 ```
