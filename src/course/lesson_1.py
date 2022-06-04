@@ -12,7 +12,7 @@ def last_five_rows(symbol: str) -> None:
 
 
 def get_mean_volume(symbol: str) -> float:
-    """Print mean volume of the given symbol"""
+    """Return mean volume of the given symbol"""
     file_path = Path("data/{}.csv".format(symbol))
     df = pd.read_csv(file_path)
     return df["Volume"].mean()
