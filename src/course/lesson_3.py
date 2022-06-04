@@ -79,17 +79,30 @@ if __name__ == "__main__":
     # a[1, :] = [1, 2, 3, 4]
     # print(a)
 
-    # Indexing an array with another array.
-    a = np.random.randint(0, 100, size=10)
-    print(a)
-    indices = [7, 3, 1]
-    print(a[indices])
+    # # Indexing an array with another array.
+    # a = np.random.randint(0, 100, size=10)
+    # print(a)
+    # indices = [7, 3, 1]
+    # print(a[indices])
 
-    # Boolean array indexing.
-    mean = a.mean()
-    print(mean)
-    # Returns an array of all values that are less than the mean.
-    print(a[a < mean])
-    # Assigns all values that are less than the mean to -1.
-    a[a < mean] = -1
-    print(a)
+    # # Boolean array indexing.
+    # mean = a.mean()
+    # print(mean)
+    # # Returns an array of all values that are less than the mean.
+    # print(a[a < mean])
+    # # Assigns all values that are less than the mean to -1.
+    # a[a < mean] = -1
+    # print(a)
+
+    # Arithmetic operations.
+    a = np.array([[1, 2, 3], [4, 5, 6]])
+    b = np.array([[10, 20, 30], [40, 50, 60]])
+    c = np.array([[100, 200], [300, 400], [500, 600]])
+    print(a * 2)
+    print(a / 2)
+    print(a / 2.0)
+    print(a + b)
+    print(a - b)
+    print(a * b)
+    print(a / b)
+    print(a.dot(c))
