@@ -32,3 +32,13 @@ if __name__ == "__main__":
 
     # A numpy array of random integers, uniformly sampled from [0, 10).
     print(np.random.randint(0, 10, size=(2, 3)))
+
+    a = np.array([[1, 2, 3], [4, 5, 6]])
+    # Print the shape of the array.
+    print(a.shape)
+    # Print the number of dimensions of the array.
+    print(a.ndim)
+    # Print the total number of elements of the array.
+    print(a.size)
+    # Print the data type of the array.
+    print(a.dtype)
