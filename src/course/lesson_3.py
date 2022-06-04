@@ -84,3 +84,12 @@ if __name__ == "__main__":
     print(b)
     indices = [7, 3, 1]
     print(b[indices])
+
+    # Boolean array indexing.
+    mean = b.mean()
+    print(mean)
+    # Returns an array of all values that are less than the mean.
+    print(b[b < mean])
+    # Assigns all values that are less than the mean to -1.
+    b[b < mean] = -1
+    print(b)
