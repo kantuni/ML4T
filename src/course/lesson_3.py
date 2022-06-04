@@ -64,3 +64,17 @@ if __name__ == "__main__":
     # `unravel_index` is then used to find the
     # coordinate in the matrix.
     print(np.unravel_index(a.argmax(), a.shape))
+
+    # Access the elements of the array.
+    print(a[1, 2])
+    print(a[1:3, 2:4])
+
+    # Change the values of the array.
+    a[1, 2] = 100
+    print(a)
+    a[2, :] = -1
+    print(a)
+    a[:-1, -1] = 1000
+    print(a)
+    a[1, :] = [1, 2, 3, 4]
+    print(a)
