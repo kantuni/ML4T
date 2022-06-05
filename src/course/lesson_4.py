@@ -42,6 +42,10 @@ def get_stock_prices(
     df = df.join(df_spy, how="inner")
 
     for symbol in symbols:
+        # Skip SPY as we already have it.
+        if symbol == "SPY":
+            continue
+
         # Read symbol data.
         df_symbol = pd.read_csv(
             symbol_to_path(symbol),
@@ -62,7 +66,7 @@ def get_stock_prices(
     return df
 
 
-def plot_data(df: pd.DataFrame, title="Stock Prices") -> None:
+def plot_data(df: pd.DataFrame, title: str = "Stock Prices") -> None:
     """Plots the dataframe."""
     axis = df.plot(title=title)
     axis.set_xlabel("Date")
@@ -72,15 +76,27 @@ def plot_data(df: pd.DataFrame, title="Stock Prices") -> None:
 
 
 if __name__ == "__main__":
-    df = get_stock_prices(["XOM", "GOOG", "GLD"], "2010-01-01", "2012-12-31")
-    print("Plotting stock prices for XOM, GOOG, and GLD from 2010 to 2012...")
-    plot_data(df)
+    # print("Plotting stock prices for SPY, XOM, GOOG, and GLD from 2010 to 2012...")
+    # df = get_stock_prices(["SPY", "XOM", "GOOG", "GLD"], "2010-01-01", "2012-12-31")
+    # plot_data(df)
 
-    print("Mean")
-    print(df.mean())
+    # print("Mean")
+    # print(df.mean())
 
-    print("Median")
-    print(df.median())
+    # print("Median")
+    # print(df.median())
 
-    print("Standard deviation")
-    print(df.std())
+    # print("Standard deviation")
+    # print(df.std())
+
+    print("Plotting stock prices and rolling mean for SPY in 2012...")
+    df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
+    axis = df["SPY"].plot(label="SPY")
+    rolling_windows = df["SPY"].rolling(window=20)
+    rolling_mean = rolling_windows.mean()
+    rolling_mean.plot(label="Rolling Mean", ax=axis)
+    axis.set_title("Stock Prices and Rolling Mean for SPY in 2012")
+    axis.set_xlabel("Date")
+    axis.set_ylabel("Price")
+    axis.legend(loc="upper left")
+    plt.show()
