@@ -66,11 +66,16 @@ def get_stock_prices(
     return df
 
 
-def plot_data(df: pd.DataFrame, title: str = "Stock Prices") -> None:
+def plot_data(
+    df: pd.DataFrame,
+    title: str = "Stock Prices",
+    xlabel: str = "Date",
+    ylabel: str = "Price",
+) -> None:
     """Plots the dataframe."""
     axis = df.plot(title=title)
-    axis.set_xlabel("Date")
-    axis.set_ylabel("Price")
+    axis.set_xlabel(xlabel)
+    axis.set_ylabel(ylabel)
     # Show the plot.
     plt.show()
 
@@ -90,6 +95,15 @@ def get_bollinger_bands(rm: pd.Series, rstd: pd.Series) -> Tuple[pd.Series, pd.S
     upper_band = rm + rstd * 2
     lower_band = rm - rstd * 2
     return upper_band, lower_band
+
+
+def compute_daily_returns(df: pd.DataFrame) -> pd.DataFrame:
+    # Let's say the price today is $110, and yesterday it was $100.
+    # Then the daily return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
+    # Thus, for day d the formula is: prices[d] / prices[d - 1] - 1
+    # NOTE: As the first day values will not have previous values,
+    # they will become NaN. We the replace them with 0.
+    return (df / df.shift(1) - 1).fillna(0)
 
 
 if __name__ == "__main__":
@@ -117,17 +131,22 @@ if __name__ == "__main__":
     # axis.legend(loc="upper left")
     # plt.show()
 
-    print("Plotting rolling mean and Bollinger bands for SPY in 2012...")
-    df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
-    rm = get_rolling_mean(df["SPY"], 20)
-    rstd = get_rolling_std(df["SPY"], 20)
-    upper_band, lower_band = get_bollinger_bands(rm, rstd)
-    axis = df["SPY"].plot(label="SPY")
-    rm.plot(label="Rolling Mean", ax=axis)
-    upper_band.plot(label="Upper Band", ax=axis, color="black")
-    lower_band.plot(label="Lower Band", ax=axis, color="black")
-    axis.set_title("Rolling mean and Bollinger bands for SPY in 2012")
-    axis.set_xlabel("Date")
-    axis.set_ylabel("Price")
-    axis.legend(loc="upper left")
-    plt.show()
+    # print("Plotting rolling mean and Bollinger bands for SPY in 2012...")
+    # df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
+    # rm = get_rolling_mean(df["SPY"], 20)
+    # rstd = get_rolling_std(df["SPY"], 20)
+    # upper_band, lower_band = get_bollinger_bands(rm, rstd)
+    # axis = df["SPY"].plot(label="SPY")
+    # rm.plot(label="Rolling Mean", ax=axis)
+    # upper_band.plot(label="Upper Band", ax=axis, color="black")
+    # lower_band.plot(label="Lower Band", ax=axis, color="black")
+    # axis.set_title("Rolling mean and Bollinger bands for SPY in 2012")
+    # axis.set_xlabel("Date")
+    # axis.set_ylabel("Price")
+    # axis.legend(loc="upper left")
+    # plt.show()
+
+    print("Plotting SPY and XOM daily returns from 2012-07-01 to 2012-07-31...")
+    df = get_stock_prices(["SPY", "XOM"], "2012-07-01", "2012-07-31")
+    daily_returns = compute_daily_returns(df)
+    plot_data(daily_returns, title="SPY and XOM daily returns", ylabel="Daily returns")
