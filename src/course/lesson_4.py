@@ -110,7 +110,7 @@ def compute_daily_returns(df: pd.DataFrame) -> pd.DataFrame:
 
 def compute_cumulative_returns(df: pd.DataFrame) -> pd.DataFrame:
     """Returns the cumulative return values.
-    Let's say the price today is $110, and the first day it was $100.
+    Let's say the price today is $110, and on the first day it was $100.
     Then the cumulative return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
     Thus, for day d the formula is: prices[d] / prices[0] - 1
     """
