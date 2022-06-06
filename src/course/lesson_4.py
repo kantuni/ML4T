@@ -98,12 +98,23 @@ def get_bollinger_bands(rm: pd.Series, rstd: pd.Series) -> Tuple[pd.Series, pd.S
 
 
 def compute_daily_returns(df: pd.DataFrame) -> pd.DataFrame:
-    # Let's say the price today is $110, and yesterday it was $100.
-    # Then the daily return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
-    # Thus, for day d the formula is: prices[d] / prices[d - 1] - 1
-    # NOTE: As the first day values will not have previous values,
-    # they will become NaN. We the replace them with 0.
+    """Returns the daily return values.
+    Let's say the price today is $110, and yesterday it was $100.
+    Then the daily return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
+    Thus, for day d the formula is: prices[d] / prices[d - 1] - 1
+    NOTE: As the first day values will not have previous values,
+    they will become NaN. We then replace them with 0.
+    """
     return (df / df.shift(1) - 1).fillna(0)
+
+
+def compute_cumulative_returns(df: pd.DataFrame) -> pd.DataFrame:
+    """Returns the cumulative return values.
+    Let's say the price today is $110, and the first day it was $100.
+    Then the cumulative return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
+    Thus, for day d the formula is: prices[d] / prices[0] - 1
+    """
+    return df / df.iloc[0] - 1
 
 
 if __name__ == "__main__":
@@ -146,7 +157,20 @@ if __name__ == "__main__":
     # axis.legend(loc="upper left")
     # plt.show()
 
-    print("Plotting SPY and XOM daily returns from 2012-07-01 to 2012-07-31...")
-    df = get_stock_prices(["SPY", "XOM"], "2012-07-01", "2012-07-31")
-    daily_returns = compute_daily_returns(df)
-    plot_data(daily_returns, title="SPY and XOM daily returns", ylabel="Daily returns")
+    # print("Plotting SPY and XOM daily returns from 2012-07-01 to 2012-07-31...")
+    # df = get_stock_prices(["SPY", "XOM"], "2012-07-01", "2012-07-31")
+    # daily_returns = compute_daily_returns(df)
+    # plot_data(daily_returns, title="SPY and XOM daily returns", ylabel="Daily returns")
+
+    year = 2010
+    print(f"Plotting SPY cumulative returns in {year}...")
+    df = get_stock_prices(["SPY"], f"{year}-01-01", f"{year}-12-31")
+    cumulative_returns = compute_cumulative_returns(df)
+    plot_data(
+        cumulative_returns, title="SPY cumulative returns", ylabel="Cumulative returns"
+    )
+    yearly_cumulative_return = df["SPY"].iloc[-1] / df["SPY"].iloc[0] - 1
+    print(
+        f"Yearly cumulative return in {year}:",
+        "{:.2f}%".format(yearly_cumulative_return * 100),
+    )
