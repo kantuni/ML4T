@@ -47,6 +47,12 @@ if __name__ == "__main__":
     daily_returns = compute_daily_returns(df)
 
     plt.scatter(daily_returns["SPY"], daily_returns["XOM"])
+    # We fit a line (a polynomial of degree 1) using regression to the scatter plot.
+    # The correlation will then be how close the points are to the line.
+    # The beta is the slope of the line.
+    # Example: If beta = 2 it means that if the market (SPY) goes up 1% the XOM will go up 2%.
+    # The alpha is the intercept of the line.
+    # Example: If alpha > 0 that means that XOM is performing better on average than SPY.
     beta_xom, alpha_xom = np.polyfit(daily_returns["SPY"], daily_returns["XOM"], 1)
     print("Beta XOM:", beta_xom)
     print("Alpha XOM:", alpha_xom)
@@ -60,6 +66,8 @@ if __name__ == "__main__":
     plt.show()
 
     plt.scatter(daily_returns["SPY"], daily_returns["GLD"])
+    # We fit a line (a polynomial of degree 1) using regression to the scatter plot.
+    # The correlation will then be how close the points are to the line.
     beta_gld, alpha_gld = np.polyfit(daily_returns["SPY"], daily_returns["GLD"], 1)
     print("Beta GLD:", beta_gld)
     print("Alpha GLD:", alpha_gld)
