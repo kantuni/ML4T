@@ -42,6 +42,10 @@ def get_stock_prices(
     df = df.join(df_spy, how="inner")
 
     for symbol in symbols:
+        # Skip SPY as we already have it.
+        if symbol == "SPY":
+            continue
+
         # Read symbol data.
         df_symbol = pd.read_csv(
             symbol_to_path(symbol),
@@ -62,11 +66,16 @@ def get_stock_prices(
     return df
 
 
-def plot_data(df: pd.DataFrame, title="Stock Prices") -> None:
+def plot_data(
+    df: pd.DataFrame,
+    title: str = "Stock Prices",
+    xlabel: str = "Date",
+    ylabel: str = "Price",
+) -> None:
     """Plots the dataframe."""
     axis = df.plot(title=title)
-    axis.set_xlabel("Date")
-    axis.set_ylabel("Price")
+    axis.set_xlabel(xlabel)
+    axis.set_ylabel(ylabel)
     # Show the plot.
     plt.show()
 
