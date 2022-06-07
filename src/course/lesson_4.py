@@ -1,83 +1,9 @@
-from pathlib import Path
-from typing import List, Tuple
+from typing import Tuple
 
 import matplotlib.pyplot as plt
 import pandas as pd
 
-
-def symbol_to_path(symbol: str) -> Path:
-    """Returns CSV file path given ticker symbol."""
-    return Path(f"data/{symbol}.csv")
-
-
-def get_stock_prices(
-    symbols: List[str],
-    start_date: str,
-    end_date: str,
-) -> pd.DataFrame:
-    """Returns a dataframe with stock (adjusted close) prices for the given symbols."""
-    # Define date range.
-    dates = pd.date_range(start_date, end_date)
-
-    # Create an empty dataframe (with dates as indices).
-    df = pd.DataFrame(index=dates)
-
-    # Read SPY data. It would act as a reference stock.
-    df_spy = pd.read_csv(
-        symbol_to_path("SPY"),
-        # use the date as index
-        index_col="Date",
-        # convert the column to datetime
-        parse_dates=True,
-        # we're only interested in these columns
-        usecols=["Date", "Adj Close"],
-    )
-
-    # Rename the "Adj Close" column to "SPY" to avoid clashes during joins.
-    df_spy = df_spy.rename(columns={"Adj Close": "SPY"})
-
-    # Inner join the dataframes.
-    # This operation will remove weekend rows, and
-    # will show only trading days form start to end date.
-    df = df.join(df_spy, how="inner")
-
-    for symbol in symbols:
-        # Skip SPY as we already have it.
-        if symbol == "SPY":
-            continue
-
-        # Read symbol data.
-        df_symbol = pd.read_csv(
-            symbol_to_path(symbol),
-            # use the date as index
-            index_col="Date",
-            # convert the column to datetime
-            parse_dates=True,
-            # we're only interested in these columns
-            usecols=["Date", "Adj Close"],
-        )
-
-        # Rename the "Adj Close" column to symbol to avoid clashes during joins.
-        df_symbol = df_symbol.rename(columns={"Adj Close": symbol})
-
-        # Left join the dataframes (because we want to keep all days when SPY traded).
-        df = df.join(df_symbol)
-
-    return df
-
-
-def plot_data(
-    df: pd.DataFrame,
-    title: str = "Stock Prices",
-    xlabel: str = "Date",
-    ylabel: str = "Price",
-) -> None:
-    """Plots the dataframe."""
-    axis = df.plot(title=title)
-    axis.set_xlabel(xlabel)
-    axis.set_ylabel(ylabel)
-    # Show the plot.
-    plt.show()
+from lesson_2 import get_stock_prices, plot_data
 
 
 def get_rolling_mean(values: pd.Series, window: int) -> pd.Series:
@@ -118,49 +44,49 @@ def compute_cumulative_returns(df: pd.DataFrame) -> pd.DataFrame:
 
 
 if __name__ == "__main__":
-    # print("Plotting stock prices for SPY, XOM, GOOG, and GLD from 2010 to 2012...")
-    # df = get_stock_prices(["SPY", "XOM", "GOOG", "GLD"], "2010-01-01", "2012-12-31")
-    # plot_data(df)
+    print("Plotting stock prices for SPY, XOM, GOOG, and GLD from 2010 to 2012...")
+    df = get_stock_prices(["SPY", "XOM", "GOOG", "GLD"], "2010-01-01", "2012-12-31")
+    plot_data(df)
 
-    # print("Mean")
-    # print(df.mean())
+    print("Mean")
+    print(df.mean())
 
-    # print("Median")
-    # print(df.median())
+    print("Median")
+    print(df.median())
 
-    # print("Standard deviation")
-    # print(df.std())
+    print("Standard deviation")
+    print(df.std())
 
-    # print("Plotting stock prices and rolling mean for SPY in 2012...")
-    # df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
-    # axis = df["SPY"].plot(label="SPY")
-    # rolling_mean = get_rolling_mean(df["SPY"], 20)
-    # rolling_mean.plot(label="Rolling Mean", ax=axis)
-    # axis.set_title("Stock Prices and Rolling Mean for SPY in 2012")
-    # axis.set_xlabel("Date")
-    # axis.set_ylabel("Price")
-    # axis.legend(loc="upper left")
-    # plt.show()
+    print("Plotting stock prices and rolling mean for SPY in 2012...")
+    df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
+    axis = df["SPY"].plot(label="SPY")
+    rolling_mean = get_rolling_mean(df["SPY"], 20)
+    rolling_mean.plot(label="Rolling Mean", ax=axis)
+    axis.set_title("Stock Prices and Rolling Mean for SPY in 2012")
+    axis.set_xlabel("Date")
+    axis.set_ylabel("Price")
+    axis.legend(loc="upper left")
+    plt.show()
 
-    # print("Plotting rolling mean and Bollinger bands for SPY in 2012...")
-    # df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
-    # rm = get_rolling_mean(df["SPY"], 20)
-    # rstd = get_rolling_std(df["SPY"], 20)
-    # upper_band, lower_band = get_bollinger_bands(rm, rstd)
-    # axis = df["SPY"].plot(label="SPY")
-    # rm.plot(label="Rolling Mean", ax=axis)
-    # upper_band.plot(label="Upper Band", ax=axis, color="black")
-    # lower_band.plot(label="Lower Band", ax=axis, color="black")
-    # axis.set_title("Rolling mean and Bollinger bands for SPY in 2012")
-    # axis.set_xlabel("Date")
-    # axis.set_ylabel("Price")
-    # axis.legend(loc="upper left")
-    # plt.show()
+    print("Plotting rolling mean and Bollinger bands for SPY in 2012...")
+    df = get_stock_prices(["SPY"], "2012-01-01", "2012-12-31")
+    rm = get_rolling_mean(df["SPY"], 20)
+    rstd = get_rolling_std(df["SPY"], 20)
+    upper_band, lower_band = get_bollinger_bands(rm, rstd)
+    axis = df["SPY"].plot(label="SPY")
+    rm.plot(label="Rolling Mean", ax=axis)
+    upper_band.plot(label="Upper Band", ax=axis, color="black")
+    lower_band.plot(label="Lower Band", ax=axis, color="black")
+    axis.set_title("Rolling mean and Bollinger bands for SPY in 2012")
+    axis.set_xlabel("Date")
+    axis.set_ylabel("Price")
+    axis.legend(loc="upper left")
+    plt.show()
 
-    # print("Plotting SPY and XOM daily returns from 2012-07-01 to 2012-07-31...")
-    # df = get_stock_prices(["SPY", "XOM"], "2012-07-01", "2012-07-31")
-    # daily_returns = compute_daily_returns(df)
-    # plot_data(daily_returns, title="SPY and XOM daily returns", ylabel="Daily returns")
+    print("Plotting SPY and XOM daily returns from 2012-07-01 to 2012-07-31...")
+    df = get_stock_prices(["SPY", "XOM"], "2012-07-01", "2012-07-31")
+    daily_returns = compute_daily_returns(df)
+    plot_data(daily_returns, title="SPY and XOM daily returns", ylabel="Daily returns")
 
     year = 2010
     print(f"Plotting SPY cumulative returns in {year}...")
