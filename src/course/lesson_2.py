@@ -87,7 +87,7 @@ def plot_selected(
     plot_data(df.loc[start_date:end_date, symbols])
 
 
-def normalize_data(df: pd.DataFrame) -> pd.DataFrame:
+def normalize_prices(df: pd.DataFrame) -> pd.DataFrame:
     """Normalizes stock prices using the first row of the dataframe."""
     return df / df.iloc[0]
 
@@ -110,4 +110,4 @@ if __name__ == "__main__":
     plot_selected(df, ["SPY", "IBM"], "2010-03-10", "2010-03-15")
 
     print("Plotting normalized data...")
-    plot_data(normalize_data(df))
+    plot_data(normalize_prices(df))
