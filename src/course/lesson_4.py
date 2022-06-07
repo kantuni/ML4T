@@ -25,9 +25,11 @@ def get_bollinger_bands(rm: pd.Series, rstd: pd.Series) -> Tuple[pd.Series, pd.S
 
 def compute_daily_returns(df: pd.DataFrame) -> pd.DataFrame:
     """Returns the daily return values.
+
     Let's say the price today is $110, and yesterday it was $100.
     Then the daily return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
     Thus, for day d the formula is: prices[d] / prices[d - 1] - 1
+
     NOTE: As the first day values will not have previous values,
     they will become NaN. We then replace them with 0.
     """
@@ -36,6 +38,7 @@ def compute_daily_returns(df: pd.DataFrame) -> pd.DataFrame:
 
 def compute_cumulative_returns(df: pd.DataFrame) -> pd.DataFrame:
     """Returns the cumulative return values.
+
     Let's say the price today is $110, and on the first day it was $100.
     Then the cumulative return is (110 - 100) / 100 = 110 / 100 - 1 = 0.1 = 10%
     Thus, for day d the formula is: prices[d] / prices[0] - 1
