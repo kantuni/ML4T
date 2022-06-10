@@ -57,46 +57,46 @@ def fit_poly(data: np.ndarray, error_fn: Callable, degree=3) -> np.poly1d:
 
 
 if __name__ == "__main__":
-    # x_guess = 2.0
-    # minimum = spo.minimize(f, x_guess, method="SLSQP", options={"disp": True})
-    # print("Minima found at x = ", minimum.x, ", f(x) = ", minimum.fun)
+    x_guess = 2.0
+    minimum = spo.minimize(f, x_guess, method="SLSQP", options={"disp": True})
+    print("Minima found at x = ", minimum.x, ", f(x) = ", minimum.fun)
 
-    # # Plot function and mark minimum
-    # xs = np.linspace(0.5, 2.5)
-    # ys = f(xs)
-    # plt.plot(xs, ys)
-    # # NOTE: ro = red circle
-    # plt.plot(minimum.x, minimum.fun, "ro")
-    # plt.title("f(x) = (x - 1.5)^2 + 0.5")
-    # plt.show()
+    # Plot function and mark minimum
+    xs = np.linspace(0.5, 2.5)
+    ys = f(xs)
+    plt.plot(xs, ys)
+    # NOTE: ro = red circle
+    plt.plot(minimum.x, minimum.fun, "ro")
+    plt.title("f(x) = (x - 1.5)^2 + 0.5")
+    plt.show()
 
-    # # Define original line
-    # line_original = np.array([4, 2])
-    # c0_original, c1_original = line_original
-    # x_original = np.linspace(0, 10, 20)
-    # y_original = c0_original * x_original + c1_original
-    # # NOTE: b-- = blue dashed line
-    # plt.plot(x_original, y_original, "b--", linewidth=2, label="Original line")
+    # Define original line
+    line_original = np.array([4, 2])
+    c0_original, c1_original = line_original
+    x_original = np.linspace(0, 10, 20)
+    y_original = c0_original * x_original + c1_original
+    # NOTE: b-- = blue dashed line
+    plt.plot(x_original, y_original, "b--", linewidth=2, label="Original line")
 
-    # # Generate noisy data points
-    # noise_sigma = 3.0
-    # noise = np.random.normal(0, noise_sigma, size=x_original.shape)
-    # data = np.asarray([x_original, y_original + noise]).T
-    # xs, ys = data[:, 0], data[:, 1]
-    # # NOTE: go = green circle
-    # plt.plot(xs, ys, "go", label="Data points")
+    # Generate noisy data points
+    noise_sigma = 3.0
+    noise = np.random.normal(0, noise_sigma, size=x_original.shape)
+    data = np.asarray([x_original, y_original + noise]).T
+    xs, ys = data[:, 0], data[:, 1]
+    # NOTE: go = green circle
+    plt.plot(xs, ys, "go", label="Data points")
 
-    # # Fit line to data points
-    # line_fitted = fit_line(data, error_line)
-    # c0_fitted, c1_fitted = line_fitted
-    # x_fitted = np.linspace(0, 10, 20)
-    # y_fitted = c0_fitted * x_fitted + c1_fitted
-    # # NOTE: r-- = red dashed line
-    # plt.plot(x_fitted, y_fitted, "r--", linewidth=2, label="Fitted line")
+    # Fit line to data points
+    line_fitted = fit_line(data, error_line)
+    c0_fitted, c1_fitted = line_fitted
+    x_fitted = np.linspace(0, 10, 20)
+    y_fitted = c0_fitted * x_fitted + c1_fitted
+    # NOTE: r-- = red dashed line
+    plt.plot(x_fitted, y_fitted, "r--", linewidth=2, label="Fitted line")
 
-    # plt.title("Fitting a line to data points")
-    # plt.legend(loc="upper left")
-    # plt.show()
+    plt.title("Fitting a line to data points")
+    plt.legend(loc="upper left")
+    plt.show()
 
     # Define original polynomial
     poly_original = np.poly1d([1.5, 10, 5, 60, 50])
