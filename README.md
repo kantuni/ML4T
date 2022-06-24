@@ -7,5 +7,5 @@ poetry install
 
 Run script
 ```bash
-poetry run python src/course/lesson_{x}.py
+poetry run python src/lessons/lesson_{x}.py
 ```
